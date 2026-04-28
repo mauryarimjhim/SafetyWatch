@@ -1,0 +1,198 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ========== Global Styles ========== */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: 'Inter', system-ui, -apple-system, sans-serif;
+  background-color: #060a13;
+  color: #e5e7eb;
+  overflow-x: hidden;
+}
+
+/* ========== Custom Scrollbar ========== */
+::-webkit-scrollbar {
+  width: 8px;
+}
+::-webkit-scrollbar-track {
+  background: #0B1220;
+}
+::-webkit-scrollbar-thumb {
+  background: #374151;
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #4b5563;
+}
+
+/* ========== Leaflet Overrides ========== */
+.leaflet-container {
+  background: #0B1220 !important;
+  border-radius: 16px;
+  font-family: 'Inter', sans-serif;
+}
+
+.leaflet-control-zoom {
+  border: none !important;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.4) !important;
+}
+
+.leaflet-control-zoom a {
+  background: #1a2540 !important;
+  color: #e5e7eb !important;
+  border: 1px solid #374151 !important;
+}
+
+.leaflet-control-zoom a:hover {
+  background: #243055 !important;
+}
+
+.leaflet-popup-content-wrapper {
+  background: #111a2e !important;
+  color: #e5e7eb !important;
+  border-radius: 12px !important;
+  box-shadow: 0 8px 32px rgba(0,0,0,0.5) !important;
+  border: 1px solid #374151 !important;
+}
+
+.leaflet-popup-tip {
+  background: #111a2e !important;
+}
+
+.leaflet-routing-container {
+  display: none !important;
+}
+
+/* ========== Glass Card ========== */
+.glass-card {
+  background: rgba(17, 26, 46, 0.8);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(55, 65, 81, 0.5);
+  border-radius: 16px;
+}
+
+.glass-card-light {
+  background: rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 16px;
+}
+
+/* ========== Gradient Text ========== */
+.gradient-text {
+  background: linear-gradient(135deg, #f97316, #ec4899);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.gradient-text-blue {
+  background: linear-gradient(135deg, #3b82f6, #06b6d4);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* ========== Gradient Button ========== */
+.btn-gradient {
+  background: linear-gradient(135deg, #f97316, #ec4899);
+  color: white;
+  font-weight: 600;
+  padding: 0.75rem 1.5rem;
+  border-radius: 12px;
+  border: none;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 15px rgba(249, 115, 22, 0.3);
+}
+
+.btn-gradient:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 25px rgba(249, 115, 22, 0.5);
+}
+
+.btn-gradient:active {
+  transform: translateY(0);
+}
+
+/* ========== Loading Spinner ========== */
+.spinner {
+  width: 40px;
+  height: 40px;
+  border: 3px solid rgba(249, 115, 22, 0.2);
+  border-top: 3px solid #f97316;
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+/* ========== Toast ========== */
+.toast {
+  position: fixed;
+  bottom: 24px;
+  right: 24px;
+  padding: 16px 24px;
+  border-radius: 12px;
+  background: #111a2e;
+  border: 1px solid #374151;
+  color: #e5e7eb;
+  box-shadow: 0 8px 32px rgba(0,0,0,0.5);
+  z-index: 10000;
+  animation: slideUp 0.3s ease-out;
+}
+
+/* ========== SOS Pulse Ring ========== */
+.sos-ring {
+  position: absolute;
+  inset: -8px;
+  border-radius: 50%;
+  border: 2px solid rgba(239, 68, 68, 0.4);
+  animation: sosPulseRing 2s ease-out infinite;
+}
+
+@keyframes sosPulseRing {
+  0% { transform: scale(1); opacity: 1; }
+  100% { transform: scale(1.6); opacity: 0; }
+}
+
+/* ========== Gauge ========== */
+.safety-gauge {
+  position: relative;
+  width: 160px;
+  height: 80px;
+  overflow: hidden;
+}
+
+.safety-gauge::before {
+  content: '';
+  position: absolute;
+  width: 160px;
+  height: 160px;
+  border-radius: 50%;
+  border: 12px solid #1a2540;
+  border-top-color: transparent;
+  border-right-color: transparent;
+  transform: rotate(225deg);
+}
+
+/* ========== Responsive adjustments ========== */
+@media (max-width: 768px) {
+  .leaflet-container {
+    border-radius: 12px;
+  }
+}
