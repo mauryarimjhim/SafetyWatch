@@ -78,4 +78,4 @@ export const getSafetyLevel = (score) => {
   return SAFETY_LEVELS.danger;
 };
 
-export const API_BASE = '/api';
+export const API_BASE = import.meta.env.VITE_API_BASE || 'https://crime-map-m4xc.onrender.com/api';

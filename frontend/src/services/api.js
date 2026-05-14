@@ -1,4 +1,4 @@
-const API_BASE = '/api';
+const API_BASE = import.meta.env.VITE_API_BASE || 'https://crime-map-m4xc.onrender.com/api';
 
 /**
  * Fetch crime data for a city with optional filters
