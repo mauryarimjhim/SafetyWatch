@@ -1,5 +1,5 @@
-import { useState, useEffect } from "react";
-import { AlertTriangle, Send, MapPin, Loader } from "lucide-react";
+import { useState } from "react";
+import { AlertTriangle, MapPin, Loader, MessageSquare } from "lucide-react";
 import { sendSOSAlert } from "../services/api";
 
 export default function SOSButton() {
@@ -7,6 +7,7 @@ export default function SOSButton() {
   const [sending, setSending] = useState(false);
   const [sent, setSent] = useState(false);
   const [location, setLocation] = useState(null);
+  const [smsNotice, setSmsNotice] = useState(null);
 
   const handleSOS = async () => {
     setActive(true);
@@ -17,10 +18,25 @@ export default function SOSButton() {
           async (pos) => {
             const loc = { lat: pos.coords.latitude, lng: pos.coords.longitude };
             setLocation(loc);
-            try { await sendSOSAlert(loc.lat, loc.lng); } catch {}
+
+            const savedUserRaw = localStorage.getItem('safetywatch_user');
+            const savedUser = savedUserRaw ? JSON.parse(savedUserRaw) : null;
+
+            try {
+              const res = await sendSOSAlert(loc.lat, loc.lng, {
+                name: savedUser?.name || 'SafetyWatch User',
+                phone: savedUser?.phone || '+91 98765 43210',
+                emergencyContact: savedUser?.emergencyContact || ''
+              });
+
+              if (res?.smsResult) {
+                setSmsNotice(`Mobile SMS dispatched to ${res.smsResult.phone}`);
+              }
+            } catch {}
+
             setSending(false);
             setSent(true);
-            // Try Web Share API
+
             if (navigator.share) {
               try {
                 await navigator.share({
@@ -29,7 +45,7 @@ export default function SOSButton() {
                 });
               } catch {}
             }
-            setTimeout(() => { setActive(false); setSent(false); setLocation(null); }, 5000);
+            setTimeout(() => { setActive(false); setSent(false); setLocation(null); setSmsNotice(null); }, 6000);
           },
           () => { setSending(false); setActive(false); alert("Location access needed for SOS"); }
         );
@@ -64,9 +80,14 @@ export default function SOSButton() {
         </div>
       ) : sent ? (
         <div className="space-y-2">
-          <div className="text-green-400 text-sm font-medium">✓ Alert sent successfully!</div>
+          <div className="text-green-400 text-xs font-bold">✓ Emergency SOS & Mobile SMS Dispatched!</div>
+          {smsNotice && (
+            <div className="text-[11px] text-orange-400 font-medium flex items-center gap-1">
+              <MessageSquare size={12} /> {smsNotice}
+            </div>
+          )}
           {location && (
-            <div className="flex items-center gap-1 text-xs text-gray-500">
+            <div className="flex items-center gap-1 text-xs text-gray-400">
               <MapPin size={10} /> {location.lat.toFixed(4)}, {location.lng.toFixed(4)}
             </div>
           )}

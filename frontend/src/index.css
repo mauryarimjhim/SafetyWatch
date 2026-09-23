@@ -20,17 +20,36 @@ body {
   overflow-x: hidden;
 }
 
+/* ========== Entering Input Entity Styles (Pure Black Inputs) ========== */
+input, select, textarea {
+  background-color: #000000 !important;
+  color: #ffffff !important;
+  border-color: #374151 !important;
+}
+
+input::placeholder, textarea::placeholder {
+  color: #9ca3af !important;
+}
+
+select option {
+  background-color: #000000 !important;
+  color: #ffffff !important;
+}
+
 /* ========== Custom Scrollbar ========== */
 ::-webkit-scrollbar {
   width: 8px;
 }
+
 ::-webkit-scrollbar-track {
   background: #0B1220;
 }
+
 ::-webkit-scrollbar-thumb {
   background: #374151;
   border-radius: 4px;
 }
+
 ::-webkit-scrollbar-thumb:hover {
   background: #4b5563;
 }
@@ -44,7 +63,7 @@ body {
 
 .leaflet-control-zoom {
   border: none !important;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.4) !important;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4) !important;
 }
 
 .leaflet-control-zoom a {
@@ -61,7 +80,7 @@ body {
   background: #111a2e !important;
   color: #e5e7eb !important;
   border-radius: 12px !important;
-  box-shadow: 0 8px 32px rgba(0,0,0,0.5) !important;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5) !important;
   border: 1px solid #374151 !important;
 }
 
@@ -138,7 +157,9 @@ body {
 }
 
 @keyframes spin {
-  to { transform: rotate(360deg); }
+  to {
+    transform: rotate(360deg);
+  }
 }
 
 /* ========== Toast ========== */
@@ -151,7 +172,7 @@ body {
   background: #111a2e;
   border: 1px solid #374151;
   color: #e5e7eb;
-  box-shadow: 0 8px 32px rgba(0,0,0,0.5);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5);
   z-index: 10000;
   animation: slideUp 0.3s ease-out;
 }
@@ -166,8 +187,15 @@ body {
 }
 
 @keyframes sosPulseRing {
-  0% { transform: scale(1); opacity: 1; }
-  100% { transform: scale(1.6); opacity: 0; }
+  0% {
+    transform: scale(1);
+    opacity: 1;
+  }
+
+  100% {
+    transform: scale(1.6);
+    opacity: 0;
+  }
 }
 
 /* ========== Gauge ========== */

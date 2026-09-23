@@ -1,4 +1,5 @@
-// Mock police stations based on approximate location
+const { sendSMSNotification } = require('../services/smsService');
+
 const STATIONS = [
   { name: 'Central Police Station', address: 'Main Road, Central District', phone: '011-23456789', baseLat: 28.63, baseLng: 77.22 },
   { name: 'North District Police Station', address: 'Civil Lines, North District', phone: '011-23456790', baseLat: 28.68, baseLng: 77.21 },
@@ -35,13 +36,30 @@ exports.getStations = (req, res) => {
 };
 
 exports.sendSOS = (req, res) => {
-  const { lat, lng, timestamp } = req.body;
+  const { lat, lng, timestamp, name, phone, emergencyContact } = req.body;
   console.log(`🚨 SOS ALERT received at ${timestamp} — Location: ${lat}, ${lng}`);
+
+  // Send SMS to user & emergency contact
+  const smsResult = sendSMSNotification({
+    phone,
+    name,
+    area: `${lat}, ${lng}`,
+    emergencyContact,
+    type: 'SOS_ALERT'
+  });
+
   res.json({
     success: true,
-    message: 'SOS alert received. Emergency services have been notified.',
+    message: 'SOS alert received. Emergency services & contacts notified via Mobile SMS.',
     alertId: `SOS_${Date.now()}`,
     respondingUnit: 'PCR Van #' + Math.floor(Math.random() * 50 + 1),
-    eta: Math.floor(Math.random() * 10 + 3) + ' minutes',
+    eta: Math.floor(Math.random() * 8 + 3) + ' minutes',
+    smsResult
   });
+};
+
+exports.sendMobileSMS = (req, res) => {
+  const { phone, name, area, riskScore, emergencyContact, type } = req.body;
+  const result = sendSMSNotification({ phone, name, area, riskScore, emergencyContact, type });
+  res.json({ success: true, result });
 };
